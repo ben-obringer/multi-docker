@@ -1,0 +1,16 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t benobringer/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true benobringer/react-test npm test
+
+after_success:
+  - docker build -t benobringer/multi-client ./client
+  - docker build -t benobringer/multi-nginx ./nginx
+  - docker build -t benobringer/multi-server ./server
+  - docker build -t benobringer/multi-worker ./worker
+
