@@ -13,4 +13,8 @@ after_success:
   - docker build -t benobringer/multi-nginx ./nginx
   - docker build -t benobringer/multi-server ./server
   - docker build -t benobringer/multi-worker ./worker
-
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push benobringer/multi-client
+  - docker push benobringer/multi-nginx
+  - docker push benobringer/multi-server
+  - docker push benobringer/multi-worker
